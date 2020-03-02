@@ -1,16 +1,24 @@
-require './lib/encryption'
+require './lib/modules/keyable'
+require './lib/modules/dateable'
+require './lib/modules/shiftable'
 
 class Enigma
-  def encrypt(message, key = nil, date = nil)
-    generate_key(key)
-    generate_date(date)
-    encryption = Encryption.new(message, key, date)
+  include Keyable
+  include Dateable
+  include Shiftable
 
-    {
-      encryption: encryption.encrypt_message(message),
-      key: final_key,
-      date: final_date
-    }
+  def initialize
+    @message = nil,
+    @key = nil,
+    @date = nil
+  end
+
+  def encrypt(message, key = nil, date = nil)
+    @origin_message = message
+    @key = generate_key(key)
+    @date = generate_offsets(date)
+
+    message_shift(@origin_message, @key, @date)
   end
 
   def decrypt(ciphertext, key = nil, date = nil)
