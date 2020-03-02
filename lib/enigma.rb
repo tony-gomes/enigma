@@ -1,10 +1,13 @@
+require './lib/encryption'
+
 class Enigma
   def encrypt(message, key = nil, date = nil)
     generate_key(key)
     generate_date(date)
+    encryption = Encryption.new(message, key, date)
 
     {
-      encryption: encrypt_message(message, key, date),
+      encryption: encryption.encrypt_message(message),
       key: final_key,
       date: final_date
     }
