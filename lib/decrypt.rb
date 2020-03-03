@@ -1,12 +1,13 @@
 require_relative 'enigma'
 
-enigma = Enigma.new
+start_enigma = Enigma.new
 
 handle = File.open(ARGV[0], 'r')
 incoming_text = handle.read
 handle.close
 
-decrypted_message = enigma.decrypt(incoming_text, *ARGV[2..3])
+
+decrypted_message = start_enigma.decrypt(incoming_text, *ARGV[2..3])
 
 writer = File.open(ARGV[1], 'w')
 writer.write(decrypted_message[:decryption])
