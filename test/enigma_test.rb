@@ -14,6 +14,7 @@ class EnigmaTest < MiniTest::Test
   def test_it_can_encrypt_message_without_parameters
     message = 'Hello World!'
     assert @enigma.encrypt(message)
+
   end
 
   def test_it_can_encrypt_message_with_parameters

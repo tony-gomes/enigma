@@ -15,10 +15,11 @@ class Enigma
 
   def encrypt(message, key = nil, date = nil)
     @origin_message = message
-    @key = generate_key(key)
+    key.nil? ? @key = generate_key(key) : package_key(key)
     @date = generate_offsets(date)
 
     message_shift(@origin_message, @key, @date)
+    package_cyphertext(cyphertext, key, date)
   end
 
   def decrypt(ciphertext, key = nil, date = nil)

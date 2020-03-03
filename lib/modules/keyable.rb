@@ -10,15 +10,9 @@ module Keyable
     random_double_digit.to_i
   end
 
-  def create_key
+  def generate_key
     key_array = []
     4.times { key_array << generate_key_pair }
     key_array
-  end
-
-  def generate_key(key)
-    return create_key if key.nil?
-
-    package_key(key)
   end
 end
