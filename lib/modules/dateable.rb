@@ -9,7 +9,6 @@ module Dateable
   end
 
   def generate_offsets(date = nil)
-    date = Time.now.strftime("%0e%0m%y") if date.nil?
     date = squared_date_last_four(date)
     package_date(date)
   end

@@ -1,17 +1,19 @@
 module Shiftable
   def package_cyphertext(cyphertext, key, date)
+    key = key.join('') if key.class == Array
+
       {
         encryption: cyphertext,
-        key: key.join(''),
-        date: date.join('')
+        key: key,
+        date: date
       }
   end
 
   def package_message(message, key, date)
     {
       decryption: message,
-      key: key.join(''),
-      date: date.join('')
+      key: key,
+      date: date
     }
   end
 

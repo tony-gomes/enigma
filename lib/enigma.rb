@@ -8,20 +8,39 @@ class Enigma
   include Shiftable
 
   def initialize
-    @message = nil,
     @key = nil,
     @date = nil
   end
 
   def encrypt(message, key = nil, date = nil)
-    @origin_message = message
-    key.nil? ? @key = generate_key(key) : package_key(key)
-    @date = generate_offsets(date)
+    if key.nil?
+      @key = generate_key[:key]
+      key_package = generate_key[:key_package]
+    else
+      @key = key
+      key_package = package_key(key)
+    end
 
-    message_shift(@origin_message, @key, @date)
-    package_cyphertext(cyphertext, key, date)
+    date.nil? ? @date = Time.now.strftime("%0e%0m%y") : @date = date
+    offset = generate_offsets(@date)
+
+    cyphertext = message_shift(message, key_package, offset)
+    package_cyphertext(cyphertext, @key, @date)
   end
 
-  def decrypt(ciphertext, key = nil, date = nil)
+  def decrypt(cyphertext, key = nil, date = nil)
+    if key.nil?
+      @key = generate_key[:key]
+      key_package = generate_key[:key_package]
+    else
+      @key = key
+      key_package = package_key(key)
+    end
+
+    date.nil? ? @date = Time.now.strftime("%0e%0m%y") : @date = date
+    offset = generate_offsets(@date)
+
+    message = message_unshift(cyphertext, key_package, offset)
+    package_message(message, @key, @date)
   end
 end

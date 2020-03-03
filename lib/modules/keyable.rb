@@ -10,9 +10,15 @@ module Keyable
     random_double_digit.to_i
   end
 
+  def generate_key_gen
+    [rand(9), rand(9), rand(9), rand(9), rand(9)].join
+  end
+
   def generate_key
-    key_array = []
-    4.times { key_array << generate_key_pair }
-    key_array
+    key = generate_key_gen
+    keys = {}
+    keys[:key] = key
+    keys[:key_package] = package_key(key)
+    keys
   end
 end

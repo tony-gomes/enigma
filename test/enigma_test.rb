@@ -13,29 +13,50 @@ class EnigmaTest < MiniTest::Test
 
   def test_it_can_encrypt_message_without_parameters
     message = 'Hello World!'
-    assert @enigma.encrypt(message)
 
+    assert_instance_of Hash, @enigma.encrypt(message)
+    assert_equal 3, @enigma.encrypt(message).count
+    assert @enigma.encrypt(message).has_key?(:encryption)
+    assert @enigma.encrypt(message).has_key?(:key)
+    assert @enigma.encrypt(message).has_key?(:date)
   end
 
   def test_it_can_encrypt_message_with_parameters
-    skip
     message = 'hello world'
     key = '02715'
     date = '040895'
-    assert @enigma.encrypt(message, key, date)
+
+    encryption = {
+      encryption: 'keder ohulw',
+      key: '02715',
+      date: '040895'
+    }
+
+    assert_equal encryption, @enigma.encrypt(message, key, date)
   end
 
   def test_it_can_decrypt_message_without_parameters
-    skip
     cyphertext = 'keder ohulw'
+
+    assert_instance_of Hash, @enigma.decrypt(cyphertext)
+    assert_equal 3, @enigma.decrypt(cyphertext).count
+    assert @enigma.decrypt(cyphertext).has_key?(:decryption)
+    assert @enigma.decrypt(cyphertext).has_key?(:key)
+    assert @enigma.decrypt(cyphertext).has_key?(:date)
     assert @enigma.decrypt(cyphertext)
   end
 
   def test_it_can_decrypt_message_with_parameters
-    skip
     cyphertext = 'keder ohulw'
     key = '02715'
     date = '040895'
-    assert @enigma.decrypt(cyphertext, key, date)
+
+    decryption = {
+      decryption: 'hello world',
+      key: '02715',
+      date: '040895'
+    }
+
+    assert_equal decryption, @enigma.decrypt(cyphertext, key, date)
   end
 end
